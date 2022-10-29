@@ -12,7 +12,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IOrderData, OrderData>();
 builder.Services.AddSingleton<IFoodData, FoodData>();
 builder.Services.AddSingleton<IDataAccess, SqlDb>();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowOrigin", builder => builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
@@ -26,6 +31,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("AllowOrigin");
 
 app.MapControllers();
 
