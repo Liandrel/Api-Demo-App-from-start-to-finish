@@ -1,4 +1,5 @@
-﻿using DataLibrary.Data;
+﻿using ApiDemoApp.Models;
+using DataLibrary.Data;
 using DataLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -63,5 +64,17 @@ namespace ApiDemoApp.Controllers
                 return Ok(output);
             }
         }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Put([FromBody] OrderUpdateModel data)
+        {
+            await _orderData.UpdateOrderName(data.id, data.OrderName);
+
+            return Ok();
+        }
+
+
     }
 }
